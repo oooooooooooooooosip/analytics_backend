@@ -100,6 +100,23 @@ class OnlineCourse(models.Model):
  
     def __str__(self):
         return self.course.title
-
+    
+    class PrerequisitesAndResults(models.Model):
+    """
+    Модель для хранения пререквизитов и результатов
+    """
+    class RelationType(models.IntegerChoices):
+        REQ = 1, 'Пререквизит'
+        RES = 2, 'Результат'
+ 
+    parent_course = models.ForeignKey('OnlineCourse', on_delete=models.CASCADE, verbose_name="Родительский курс", blank=False,
+                                 null=False)
+    child_course = models.ForeignKey('OnlineCourse', on_delete=models.CASCADE, verbose_name="Исходный курс", blank=False,
+                                 null=False)
+    relation_type = models.IntegerField(choices= RelationType.choices, verbose_name="Тип связи")
+ 
+    class Meta:
+        verbose_name = 'Пререквизиты и результаты'
+        verbose_name_plural = 'Пререквизиты и результаты'
 
 
