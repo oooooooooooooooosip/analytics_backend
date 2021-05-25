@@ -84,6 +84,22 @@ class OnlineCourse(models.Model):
 
     def __str__(self):
         return self.title
+    class Favorite(models.Model):
+    """
+    Модель для хранения избранных курсов
+    """
+    course = models.ForeignKey('OnlineCourse', on_delete=models.CASCADE, verbose_name="Курс", blank=False,
+                                 null=False)
+    user = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name="Пользователь", blank=False,
+                                 null=False)
+    certificate =  models.FileField(upload_to='certificates', verbose_name="Сертификат")
+  
+    class Meta:
+        verbose_name = 'Избранный курс'
+        verbose_name_plural = 'Избранные курсы'
+ 
+    def __str__(self):
+        return self.course.title
 
 
 
